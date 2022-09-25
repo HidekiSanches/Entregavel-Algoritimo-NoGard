@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoGard</title>
+</head>
+<style>
+body {
+    background-color: black;
+    color: white;
+    font-family: sans-serif;
+    width: 80%;
+    margin: auto;
+}
+.header {
+    border-bottom: solid 3px white;
+    font-family: sans-serif;
+    display: flex;
+}
+.header h1 {
+    padding: 5px 15px;
+    display: flex;
+    justify-content: center;
+}
+</style>
+<body>
+    <div class="header">
+        <h1>NoGard</h1>
+    </div>
+    <div class="body">
+        <h1>Performace dos atletas</h1>
+        <p>Inserir o nome do atleta: <input type="text" id="ipt_nome" placeholder="Inserir aqui..." autofocus></p>
+        <p>Inserir a faixa do atleta: <select id="sel_faixa"> <option></option><option value="Branca">Branca</option><option value="Azul">Azul</option><option value="Amarelo">Amarelo</option><option value="Laranja">Laranja</option><option value="Verde">Verde</option><option value="Roxa">Roxa</option><option value="Marrom">Marrom</option><option value="Preta">Preta</option></select></p>
+        <p>Inserir a quantidade de vitórias: <input type="text" id="ipt_qtdVitoria" placeholder="Inserir aqui..."></p>
+        <p>Inserir a quantidade de derrotas: <input type="text" id="ipt_qtdDerrota" placeholder="Inserir aqui..."></p>
+        <p>Inserir a quantidade de Empates: <input type="text" id="ipt_qtdEmpate" placeholder="Inserir aqui..."></p>
+        <button onclick="mostrar()">Analisar estatísticas</button><br>
+        <span id="span_msg"></span>
+    </div>
+
+</body>
+</html>
+<script>
+    function mostrar(){
+        var ax_nome = ipt_nome.value
+        var ax_faixa = sel_faixa.value
+        var ax_vitoria = Number(ipt_qtdVitoria.value)
+        var ax_derrota = Number(ipt_qtdDerrota.value)
+        var ax_empate = Number(ipt_qtdEmpate.value)
+        var ax_partTotal = (Number(ax_vitoria) + Number(ax_derrota) + Number(ax_empate))
+        var ax_ptInicial = 0
+        var ax_ptVitoria = 0
+
+        if (ax_faixa == "Branca"){
+            ax_ptInicial = 0
+            ax_ptVitoria = 4
+        } else if (ax_faixa == "Azul"){
+            ax_ptInicial = 1000
+            ax_ptVitotia = 10
+        } else if (ax_faixa == "Amarelo"){
+            ax_ptInicial = 2000
+            ax_ptVitotia = 30
+        } else if (ax_faixa == "Laranja"){
+            ax_ptInicial = 5000
+            ax_ptVitoria = 60
+        } else if (ax_faixa == "Verde"){
+            ax_ptInicial = 10000
+            ax_ptVitotia = 100
+        } else if (ax_faixa == "Roxa"){
+            ax_ptInicial = 15000
+            ax_ptVitoria = 150
+        } else if (ax_faixa == "Marrom"){
+            ax_ptInicial = 25000
+            ax_ptVitoria = 300
+        } else {
+            ax_ptInicial = 50000
+            ax_ptVitoria = 500
+        }
+        
+        var ax_pontos = (ax_ptInicial + (Number(ax_vitoria)*ax_ptVitoria) - (Number(ax_derrota)*(ax_ptVitoria/2)) + (ax_empate*2))
+        
+        if (ax_pontos == 0){
+            if (ax_partTotal == 0){
+        var ax_ptIniciais = ((ax_ptInicial/Number(ax_pontos))*100)
+        var ax_ptConquistado = (((Number(ax_pontos)-ax_ptInicial)/Number(ax_pontos))*100)
+        var ax_partV = ((Number(ax_vitoria)/Number(ax_partTotal))*100)
+        var ax_partDE = (((Number(ax_derrota) + Number(ax_empate))/Number(ax_partTotal))*100)
+        var ax_pontosV = ((Number(ax_partTotal) * ax_ptVitoria)+ax_ptInicial)
+        var ax_ptTotalV = ((Number(ax_pontos)/Number(ax_pontosV))*100)
+
+        span_msg.innerHTML += `${ax_nome} da faixa ${ax_faixa} tem ${ax_pontos} pontos, sendo *% dos pontos iniciais da faixa e *% em pontos conquistados em lutas. Total de lutas: ${ax_partTotal} sendo *% vitórias e *% derrotas ou empates Se ${ax_nome} tivesse vitória em todas as lutas ele teria ${ax_pontosV} pontos, hoje ele tem *% do total. <br><br>`
+        } else {
+        var ax_ptIniciais = ((ax_ptInicial/Number(ax_pontos))*100)
+        var ax_ptConquistado = (((Number(ax_pontos)-ax_ptInicial)/Number(ax_pontos))*100)
+        var ax_partV = ((Number(ax_vitoria)/Number(ax_partTotal))*100)
+        var ax_partDE = (((Number(ax_derrota) + Number(ax_empate))/Number(ax_partTotal))*100)
+        var ax_pontosV = ((Number(ax_partTotal) * ax_ptVitoria)+ax_ptInicial)
+        var ax_ptTotalV = ((Number(ax_pontos)/Number(ax_pontosV))*100)
+
+
+        span_msg.innerHTML += `${ax_nome} da faixa ${ax_faixa} tem ${ax_pontos} pontos, sendo *% dos pontos iniciais da faixa e *% em pontos conquistados em lutas. Total de lutas: ${ax_partTotal} sendo ${ax_partV.toFixed(1)}% vitórias e ${ax_partDE.toFixed(1)}% derrotas ou empates Se ${ax_nome} tivesse vitória em todas as lutas ele teria ${ax_pontosV} pontos, hoje ele tem ${ax_ptTotalV.toFixed(1)}% do total. <br><br>`
+        }
+        } else {
+        var ax_ptIniciais = ((ax_ptInicial/Number(ax_pontos))*100)
+        var ax_ptConquistado = (((Number(ax_pontos)-ax_ptInicial)/Number(ax_pontos))*100)
+        var ax_partV = ((Number(ax_vitoria)/Number(ax_partTotal))*100)
+        var ax_partDE = (((Number(ax_derrota) + Number(ax_empate))/Number(ax_partTotal))*100)
+        var ax_pontosV = ((Number(ax_partTotal) * ax_ptVitoria)+ax_ptInicial)
+        var ax_ptTotalV = ((Number(ax_pontos)/Number(ax_pontosV))*100)
+
+        span_msg.innerHTML += `${ax_nome} da faixa ${ax_faixa} tem ${ax_pontos} pontos, sendo ${ax_ptIniciais.toFixed(1)}% dos pontos iniciais da faixa e ${ax_ptConquistado.toFixed(1)}% em pontos conquistados em lutas. Total de lutas: ${ax_partTotal} sendo ${ax_partV.toFixed(1)}% vitórias e ${ax_partDE.toFixed(1)}% derrotas ou empates Se ${ax_nome} tivesse vitória em todas as lutas ele teria ${ax_pontosV} pontos, hoje ele tem ${ax_ptTotalV.toFixed(1)}% do total. <br><br>`
+        }
+        
+    }
+</script>
